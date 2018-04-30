@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hazelcast xmlns="http://www.hazelcast.com/schema/config"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://www.hazelcast.com/schema/config
+           http://www.hazelcast.com/schema/config/hazelcast-config-3.11.xsd">
+
+    <!--
+        The <config-replacers> allow to use variables (placeholders) within the configuration file and use an external
+        class to retrieve correct values (replacements).
+
+        It can be used for masking sensitive strings such as passwords for instance.
+
+        Format of a variable is:
+        $ PREFIX { STRING_TO_BE_REPLACED }      e.g. $ENC{nnPgTqJCcCQ=:23000:B4y/nlp6M0t3q6YiKImW+w==}
+
+        The PREFIX value depends on the replacer implementation (e.g. "ENC" is used for the EncryptionReplacer)
+        The STRING_TO_BE_REPLACED is the value which is provided to replacer implementation.
+    -->
+    <config-replacers>
+        <replacer class-name="com.hazelcast.config.replacer.ToStringReplacer"/>
+    </config-replacers>
+
+    <group>
+        <name>$TOSTRING{com.hazelcast.config.replacer.GroupNameProvider}</name>
+    </group>
+
+    <instance-name>Instance $TOSTRING{java.util.Date}</instance-name>
+</hazelcast>
